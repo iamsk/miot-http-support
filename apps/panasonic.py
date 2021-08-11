@@ -1,7 +1,7 @@
 import requests
 import json
 
-from apps.config import PANASONIC
+from config import PANASONIC
 
 cookies = {
     'SSID': PANASONIC['SSID'],

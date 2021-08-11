@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
 
-from apps.panasonic import control
-from apps.config import BEMFA
+from panasonic import control
+from config import BEMFA
 
 mappings = {
     'on': '打开灯',  # 打开风暖 <-> 打开浴霸灯
