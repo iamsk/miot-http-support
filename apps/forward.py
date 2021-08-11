@@ -1,16 +1,16 @@
 import paho.mqtt.client as mqtt
 
-from panasonic import control
-from config import BEMFA
+from apps.panasonic import control
+from apps.config import BEMFA
 
 mappings = {
     'on': '打开灯',  # 打开风暖 <-> 打开浴霸灯
     'off': '关闭灯',  # 关闭风暖 <-> 关闭浴霸灯
-    '3': '取暖',  # 打开风暖辅热功能 <-> 浴霸取暖
-    '4': '换气',  # 打开风暖柔风功能 <-> 浴霸换气
-    '5': '热干燥',  # 打开风暖干燥功能 <-> 浴霸热干燥
+    '3': '取暖',  # 打开风暖辅热功能 <-> 取暖
+    '4': '换气',  # 打开风暖柔风功能 <-> 换气
+    '5': '热干燥',  # 打开风暖干燥功能 <-> 热干燥
     '6': '待机',  # 打开风暖睡眠模式 <-> 浴霸待机
-    '7': '凉干燥',  # 打开风暖节能模式 <-> 浴霸凉干燥
+    '7': '凉干燥',  # 打开风暖节能模式 <-> 凉干燥
 }
 
 
