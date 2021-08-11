@@ -2,7 +2,7 @@
 
 ### Demo for Panasonic Bath Bully `FV-RB20VL1`
 
-![toplogy](./images/toplogy.jpg)
+<img src="./images/toplogy.jpg" width="400">
 
 1. 逆向 `Panasonic Smart China`，获得控制浴霸的请求信息（HTTP 请求），详见 `apps/panasonic.py`；
 ![panasonic](./images/panasonic.jpeg)
