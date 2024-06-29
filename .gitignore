@@ -1,2 +1,2 @@
-apps/config.py
 venv/
+.env
