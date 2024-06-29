@@ -19,7 +19,7 @@ class Panasonic(object):
         # 'Accept-Encoding': 'gzip, deflate, br',
         'Content-Type': 'application/json',
         'Origin': 'https://app.psmartcloud.com',
-        'xtoken': f'SSID={os.getenv("BEMFA_CLIENT_ID", "")}',
+        'xtoken': f'SSID={os.getenv("PANASONIC_SSID", "")}',
         'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148',
         # 'Referer': '',  # no need
         # 'Content-Length': '468',  # no need
@@ -40,8 +40,8 @@ class Panasonic(object):
             "token": self.token,
             "params": self.params,
         }
-        import pdb;
-        pdb.set_trace()
+        # import pdb;
+        # pdb.set_trace()
         response = requests.post(self.url, headers=self.headers, cookies=self.cookies, json=data, verify=False)
         print(response.json())
 
