@@ -1,6 +1,9 @@
-import requests
+import os
 
-from config import PANASONIC
+import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class Panasonic(object):
@@ -12,18 +15,18 @@ class Panasonic(object):
         'Host': 'app.psmartcloud.com',
         'Accept': 'application/json, text/javascript, */*; q=0.01',
         'X-Requested-With': 'XMLHttpRequest',
-        'Accept-Language': 'zh-cn',
-        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept-Language': 'en-US,en;q=0.9',
+        # 'Accept-Encoding': 'gzip, deflate, br',
         'Content-Type': 'application/json',
         'Origin': 'https://app.psmartcloud.com',
-        'xtoken': 'SSID={}'.format(PANASONIC['SSID']),
-        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148',
+        'xtoken': f'SSID={os.getenv("PANASONIC_SSID", "")}',
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148',
         # 'Referer': '',  # no need
         # 'Content-Length': '468',  # no need
         'Connection': 'keep-alive',
     }
     cookies = {
-        'acw_tc': PANASONIC['ACW_TC'],
+        'acw_tc': os.getenv("PANASONIC_ACW_TC", ""),
     }
 
     def update_params(self, action):
@@ -32,11 +35,13 @@ class Panasonic(object):
     def trigger(self):
         data = {
             "id": 1,
-            "usrId": PANASONIC['USER_ID'],
+            "usrId": os.getenv("PANASONIC_USER_ID", ""),
             "deviceId": self.deviceId,
             "token": self.token,
             "params": self.params,
         }
+        # import pdb;
+        # pdb.set_trace()
         response = requests.post(self.url, headers=self.headers, cookies=self.cookies, json=data, verify=False)
         print(response.json())
 
@@ -46,8 +51,8 @@ class Panasonic(object):
 
 
 class BathHeater(Panasonic):
-    deviceId = PANASONIC['DEVICE_ID']
-    token = PANASONIC['TOKEN']
+    deviceId = os.getenv("PANASONIC_DEVICE_ID", "")
+    token = os.getenv("PANASONIC_TOKEN", "")
     url = 'https://app.psmartcloud.com/App/ADevSetStatusInfoFV54BA1C'
     params = {
         "DIYnextwindDirectionSet": 255,
@@ -79,8 +84,8 @@ class BathHeater(Panasonic):
 
 
 class AirCondition(Panasonic):
-    deviceId = PANASONIC['AIR_CONDITION_DEVICE_ID']
-    token = PANASONIC['AIR_CONDITION_TOKEN']
+    deviceId = os.getenv("PANASONIC_AIR_CONDITION_DEVICE_ID", "")
+    token = os.getenv("PANASONIC_AIR_CONDITION_TOKEN", "")
     url = 'https://app.psmartcloud.com/App/ACDevSetStatusInfoAW'
     params = {
         'runMode': 3,
@@ -115,16 +120,16 @@ class AirCondition(Panasonic):
 
     def update_params(self, action):
         running_modes = {
-            '开空调': 1,
-            '关空调': 0,
+            'on': 1,
+            'off': 0,
         }
         self.params['runStatus'] = running_modes[action]
 
 
 if __name__ == '__main__':
-    # device = BathHeater()
-    # device.control('打开灯')
+    device = BathHeater()
+    device.control('打开灯')
     # device.control('关闭灯')
-    # exit()
+    exit()
     device = AirCondition()
-    device.control('开空调')
+    device.control('on')

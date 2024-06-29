@@ -1,2 +1,4 @@
-apps/config.py
 venv/
+.env
+__pycache__/
+*.pyc
